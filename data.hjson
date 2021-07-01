@@ -519,6 +519,13 @@
                 default: true
                 recommend: yes
             }
+            "Disable Media DRM Internet Access": {
+                ooconfig: {
+                    S008: true
+                }
+                default: false
+                recommend: limited
+            }
             "Disable blur on lock screen": {
                 command: Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "DisableAcrylicBackgroundOnLogon" -Type DWord -Value 1
                 default: true
