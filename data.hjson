@@ -1,0 +1,1865 @@
+{   
+    # allow execution of scripts
+    SetExecutionPolicy: Set-ExecutionPolicy Bypass -Scope Process -Force
+    
+    # create a system resotre point (requires windows to be activated)
+    CreateRestorePoint: ./scripts/Sophia/Sophia.ps1 -Functions "CreateRestorePoint"
+    
+    # install chocolatey
+    InstallChoco: "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+    
+    # main functions
+    Debloat: {
+        # commands will be ran:
+        # powershell "./scripts/Windows10Debloater/DebloatWindows.ps1" list of packages 
+        essential: {
+            command:
+            '''
+            ./scripts/Windows10Debloater/ProtectPrivacy.ps1
+            '''
+        }
+        
+       # Commands:
+        "Unnecessary windows features (prompt)": {
+            command: ./scripts/Sophia/Sophia.ps1 -Functions "WindowsFeatures -Disable", "WindowsCapabilities -Uninstall"
+            default: true
+        }
+        "Unnecessary scheduled tasks (prompt)": {
+            command: ./scripts/Sophia/Sophia.ps1 -Functions "ScheduledTasks -Disable"
+            default: true
+        }
+        "Bloatware registry keys": {
+            command: ./scripts/Windows10Debloater/RemoveBloatwareRegKeys.ps1
+            default: true
+        }
+        "Stop PDFs from opening in Edge": {
+            command: ./scripts/Windows10Debloater/StopEdgePDF.ps1
+            default: true
+        }
+        "Powershell ISE": {
+            command: Get-WindowsCapability -Online | Where-Object { $_.Name -like "Microsoft.Windows.PowerShell.ISE*" } | Remove-WindowsCapability -Online | Out-Null
+            default: true
+        }
+        "OneDrive": {
+            command:
+            '''
+            ./scripts/Windows10Debloater/UninstallOneDrive.ps1
+            ./scripts/Sophia/Sophia.ps1 -Functions "OneDrive -Uninstall"
+            '''
+            ooconfig: {
+                O001: true
+            }
+            default: true
+        }
+       # Unnecessary Windows 10 AppX Apps
+        "Bing News": {
+            uwppackage: Microsoft.BingNews
+            default: true
+        }
+        "Get Started": {
+            uwppackage: Microsoft.Getstarted
+            default: true
+        }
+        Messaging: {
+            uwppackage: Microsoft.Messaging
+            default: true
+        }
+        "3D Viewer": {
+            uwppackage: Microsoft.Microsoft3DViewer
+            default: true
+        }
+        "Office Hub": {
+            uwppackage: Microsoft.MicrosoftOfficeHub
+            default: true
+        }
+        Solitaire: {
+            uwppackage: Microsoft.MicrosoftSolitaireCollection
+            default: true
+        }
+        "Network Speed Test": {
+            uwppackage: Microsoft.NetworkSpeedTest
+            default: true
+        }
+        News: {
+            uwppackage: Microsoft.News
+            default: true
+        }
+        "Microsoft Lens": {
+            uwppackage: Microsoft.Office.Lens
+            default: true
+        }
+        "Microsoft OneNote": {
+            uwppackage: Microsoft.Office.OneNote
+            default: true
+        }
+        "Microsoft Sway": {
+            uwppackage: Microsoft.Office.Sway
+            default: true
+        }
+        "OneConnect": {
+            uwppackage: Microsoft.OneConnect
+            default: true
+        }
+        People: {
+            uwppackage: Microsoft.People
+            default: true
+        }
+        Paint3D: {
+            uwppackage: Microsoft.Paint3D
+            default: true
+        }
+        "Remote Desktop": {
+            uwppackage: Microsoft.RemoteDesktop
+            default: true
+        }
+        Skype: {
+            uwppackage: Microsoft.SkypeApp
+            default: true
+        }
+        "Store Purchase App": {
+            uwppackage: Microsoft.StorePurchaseApp
+            default: true
+        }
+        "Office Todo List": {
+            uwppackage: Microsoft.Office.Todo.List
+            default: true
+        }
+        Whiteboard: {
+            uwppackage: Microsoft.Whiteboard
+            default: true
+        }
+        Alarms: {
+            uwppackage: Microsoft.WindowsAlarms
+            default: true
+        }
+        Camera: {
+            uwppackage: Microsoft.WindowsCamera
+            default: false
+        }
+        "Mail and Calendar": {
+            uwppackage: microsoft.windowscommunicationsapps
+            default: true
+        }
+        "Feedback Hub": {
+            uwppackage: Microsoft.WindowsFeedbackHub
+            default: true
+        }
+        Maps: {
+            uwppackage: Microsoft.WindowsMaps
+            default: true
+        }
+        "Sound Recorder": {
+            uwppackage: Microsoft.WindowsSoundRecorder
+            default: true
+        }
+        "Xbox TCUI": {
+            uwppackage: Microsoft.Xbox.TCUI
+            default: true
+        }
+        "Xbox App": {
+            uwppackage: Microsoft.XboxApp
+            default: true
+        }
+        "Xbox Game Overlay": {
+            uwppackage: Microsoft.XboxGameOverlay
+            default: true
+        }
+        "Xbox Identity Provider": {
+            uwppackage: Microsoft.XboxIdentityProvider
+            default: true
+        }
+        "Xbox Speech-To-Text Overlay": {
+            uwppackage: Microsoft.XboxSpeechToTextOverlay
+            default: true
+        }
+        "Zune Music": {
+            uwppackage: Microsoft.ZuneMusic
+            default: true
+        }
+        "Zune Video": {
+            uwppackage: Microsoft.ZuneVideo
+            default: true
+        }
+
+       # Sponsored Windows 10 AppX Apps
+        "Eclipse Manager": {
+            uwppackage: *EclipseManager*
+            default: true
+        }
+        "Actipro Software LLC": {
+            uwppackage: *ActiproSoftwareLLC*
+            default: true
+        }
+        "Adobe Photoshop Express": {
+            uwppackage: *AdobeSystemsIncorporated.AdobePhotoshopExpress*
+            default: true
+        }
+        Duolingo: {
+            uwppackage: *Duolingo-LearnLanguagesforFree*
+            default: true
+        }
+        Pandora: {
+            uwppackage: *PandoraMediaInc*
+            default: true
+        }
+        "Candy Crush": {
+            uwppackage: *CandyCrush*
+            default: true
+        }
+        "Bubble Witch 3 Saga": {
+            uwppackage: *BubbleWitch3Saga*
+            default: true
+        }
+        Wunderlist: {
+            uwppackage: *Wunderlist*
+            default: true
+        }
+        Flipboard: {
+            uwppackage: *Flipboard*
+            default: true
+        }
+        Twitter: {
+            uwppackage: *Twitter*
+            default: true
+        }
+        Facebook: {
+            uwppackage: *Facebook*
+            default: true
+        }
+        Spotify: {
+            uwppackage: *Spotify*
+            default: true
+        }
+        Minecraft: {
+            uwppackage: *Minecraft*
+            default: true
+        }
+        "Royal Revolt": {
+            uwppackage: *Royal Revolt*
+            default: true
+        }
+        Sway: {
+            uwppackage: *Sway*
+            default: true
+        }
+        "Speed Test": {
+            uwppackage: "*Speed Test*"
+            default: true
+        }
+        Dolby: {
+            uwppackage: *Dolby*
+            default: true
+        }
+             
+       # Optional: Typically not removed but you can if you need to for some reason
+        "Advertising Xaml x64": {
+            uwppackage: "*Microsoft.Advertising.Xaml_10.1712.5.0_x64__8wekyb3d8bbwe*"
+            default: true
+        }
+        "Advertising Xaml x86": {
+            uwppackage: "*Microsoft.Advertising.Xaml_10.1712.5.0_x86__8wekyb3d8bbwe*"
+            default: true
+        }
+        Weather: {
+            uwppackage: "*Microsoft.BingWeather*"
+            default: true
+        }
+        "Microsoft Paint": {
+            uwppackage: "*Microsoft.MSPaint*"
+            default: false
+        }
+        "Sticky Notes": {
+            uwppackage: "*Microsoft.MicrosoftStickyNotes*"
+            default: false
+        }
+        "Photos": {
+            uwppackage: "*Microsoft.Windows.Photos*"
+            default: false
+        }
+        "Calculator": {
+            uwppackage: "*Microsoft.WindowsCalculator*"
+            default: false
+        }
+        "Microsoft Store": {
+            uwppackage: "*Microsoft.WindowsStore*"
+            default: false
+        }
+    }
+    Optimization: {
+        essential: {
+           # sophia script commands
+            sophia:
+            '''
+            DiagnosticDataLevel -Minimal
+            ErrorReporting -Disable
+            WindowsFeedback -Disable
+            SigninInfo -Disable
+            LanguageListAccess -Disable
+            AdvertisingID -Disable
+            ShareAcrossDevices -Disable
+            WindowsWelcomeExperience -Hide
+            WindowsTips -Disable
+            SettingsSuggestedContent -Hide
+            AppsSilentInstalling -Disable
+            WhatsNewInWindows -Disable
+            TailoredExperiences -Disable
+            PowerPlan -High
+            StorageSenseTempFiles -Enable
+            StorageSenseRecycleBin -Enable
+            DeliveryOptimization -Disable
+            ThumbnailCacheRemoval -Disable
+            ReservedStorage -Disable
+            CortanaAutostart -Disable
+            BackgroundUWPApps -Disable
+            NetworkProtection -Enable
+            PUAppsDetection -Enable
+            DismissMSAccount
+            '''
+        }
+        "Visual FX": {
+            "Disable window contents when dragging": {
+                command: Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "DragFullWindows" -Type String -Value 0
+                default: false
+                recommend: slower systems
+            }
+            "Disable windows minimize animation": {
+                command: Set-ItemProperty -Path "HKCU:\Control Panel\Desktop\WindowMetrics" -Name "MinAnimate" -Type String -Value 0
+                default: false
+                recommend: slower systems
+            }
+            "Disable taskbar animations": {
+                command: Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAnimations" -Type DWord -Value 0
+                default: true
+                recommend: yes
+            }
+            "Reduce menu show delay": {
+                command: Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "MenuShowDelay" -Type String -Value 200
+                default: true
+                recommend: yes
+            }
+            "Disable other animations": {
+                command: ./scripts/DisableOtherAnimations.ps1
+                default: false
+                recommend: slower systems
+            }
+            "Disable transparency": {
+                command: Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "EnableTransparency" -Type DWord -Value 0
+                default: true
+                recommend: yes
+            }
+        }
+        "Security & Updates": {
+            "Only allow security updates": {
+                command: ./scripts/SecurityUpdatesOnly.ps1
+                default: false
+                recommend: slower systems
+            }
+            "Automatically adjust active hours": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "SmartActiveHours -Enable"
+                default: false
+                recommend: limited
+            }
+            "Disable Windows security": {
+                command: ./scripts/DisableSecurity.ps1
+                default: false
+                recommend: no
+            }
+            "Enable Windows defender sandbox": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "DefenderSandbox -Enable"
+                default: true
+                recommend: yes
+            }
+            "Disable Windows Script Host": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "WindowsScriptHost -Disable"
+                default: false
+                recommend: limited
+            }
+            "Disable Remote Desktop": {
+                command:
+                '''
+                Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Type DWord -Value 1
+                Disable-NetFirewallRule -Name "RemoteDesktop*"
+                '''
+                default: true
+                recommend: yes
+            }
+        }
+        Performance: {
+            "Use ultimate performance mode": {
+                run_in_file: true
+                flag: ultimateperformance
+                default: true
+                recommend: yes
+            }
+            "Use all processors": {
+                command: cmd /c bcdedit /set "{current}" numproc %NUMBER_OF_PROCESSORS%
+                default: true
+                recommend: yes
+            }
+            "Unpark CPU cores": {
+                command:
+                '''
+                Set-ItemProperty -Path "HKLM:\SYSTEM\ControlSet001\Control\Power\PowerSettings\54533251-82be-4824-96c1-47b60b740d00\0cc5b647-c1df-4637-891a-dec35c318583" -Name "ValueMax" -Type DWord -Value 0
+                Set-ItemProperty -Path "HKLM:\SYSTEM\ControlSet001\Control\Power\PowerSettings\54533251-82be-4824-96c1-47b60b740d00\0cc5b647-c1df-4637-891a-dec35c318583" -Name "ValueMin" -Type DWord -Value 0
+                '''
+                default: true
+                recommend: PC only
+            }
+            "Reduce boot timeout": {
+                command: cmd /c bcdedit /set "{bootmgr}" timeout 3
+                default: true
+                recommend: yes
+            }
+            "No GUI boot": {
+                command: cmd /c bcdedit /set "{current}" quietboot Yes
+                default: true
+                recommend: yes
+            }
+            "Fix timer resolution": {
+                command:
+                '''
+                bcdedit /set useplatformclock no
+                bcdedit /set useplatformtick yes
+                bcdedit /set disabledynamictick yes
+                '''
+                default: true
+                recommend: yes
+            }
+            "Disable turning off network adapters to save power": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "PCTurnOffDevice -Disable"
+                default: true
+                recommend: PC only
+            }
+            "Disable superfetch (SysMain)": {
+                command:
+                '''
+                Stop-Service "SysMain" -WarningAction SilentlyContinue
+                Set-Service "SysMain" -StartupType Disabled
+                '''
+                default: true
+                recommend: yes
+            }
+            "Disable search indexing": {
+                command: 
+                '''
+                Stop-Service "WSearch" -WarningAction SilentlyContinue
+                Set-Service "WSearch" -StartupType Disabled
+                '''
+                default: false
+                recommend: slower systems
+            }
+        }
+        Other: {
+            "Disable Bing search": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "BingSearch -Disable"
+                default: true
+                recommend: yes
+            }
+            "Automatically clear %tmp% folder": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "TempTask -Register"
+                default: true
+                recommend: yes
+            }
+            "Disable news & interests in taskbar": {
+                ooconfig: {
+                    M019: true
+                    M020: true
+                }
+                default: true
+                recommend: yes
+            }
+            "Disable system location access": {
+                ooconfig: {
+                    P056: true
+                    P057: true
+                    L001: true
+                    L003: true
+                    L005: true
+                }
+                default: true
+                recommend: yes
+            }
+            "Disable sensors features (screen auto-rotation)": {
+                ooconfig: {
+                    L004: true
+                }
+                default: true
+                recommend: yes
+            }
+            "Disable windows clipboard": {
+                ooconfig: {
+                    A004: true
+                    A006: true
+                }
+                default: true
+                recommend: yes
+            }
+            "Disable action center": {
+                command: Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Type DWord -Value 1
+                default: false
+                recommend: slower systems
+            }
+            "Disable activity history": {
+                command:
+                '''
+                Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableActivityFeed" -Type DWord -Value 0
+                Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "PublishUserActivities" -Type DWord -Value 0
+                Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "UploadUserActivities" -Type DWord -Value 0
+                '''
+                default: true
+                recommend: yes
+            }
+            "Disable blur on lock screen": {
+                command: Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "DisableAcrylicBackgroundOnLogon" -Type DWord -Value 1
+                default: true
+                recommend: yes
+            }
+            "Disable Xbox game bar & game tips": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "XboxGameBar -Disable", "XboxGameTips -Disable"
+                default: true
+                recommend: yes
+            }
+            "Disable fast startup": {
+                command: Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power" -Name "HiberbootEnabled" -Type DWord -Value 0
+                default: false
+                recommend: limited
+            }
+        }
+    }
+    "UI Customization": {
+        essential: {
+            sophia:
+            '''
+            MergeConflicts -Show
+            CortanaButton -Hide
+            OneDriveFileExplorerAd -Hide
+            TaskViewButton -Hide
+            PeopleTaskbar -Hide
+            FileTransferDialog -Detailed
+            WindowsInkWorkspace -Hide
+            MeetNow -Hide
+            UnpinTaskbarShortcuts -Shortcuts Edge, Store, Mail
+            NewAppInstalledNotification -Hide
+            FirstLogonAnimation -Disable
+            JPEGWallpapersQuality -Max
+            TaskManagerWindow -Expanded
+            RestartNotification -Show
+            ShortcutsSuffix -Disable
+            Win32LongPathLimit -Disable
+            BSoDStopError -Enable
+            LatestInstalled.NET -Enable
+            F1HelpPage -Disable
+            NumLock -Enable
+            StickyShift -Disable
+            AppSuggestions -Hide
+            RunPowerShellShortcut -Elevated
+            MSIExtractContext -Add
+            CABInstallContext -Add
+            CastToDeviceContext -Hide
+            ShareContext -Hide
+            PrintCMDContext -Hide
+            IncludeInLibraryContext -Hide
+            BitLockerContext -Hide
+            BitmapImageNewContext -Remove
+            RichTextDocumentNewContext -Remove
+            UseStoreOpenWith -Hide
+            '''
+            command:
+            '''
+            Set-ItemProperty -Path "HKCU:\Control Panel\Accessibility\StickyKeys" -Name "Flags" -Type String -Value "506"
+            Set-ItemProperty -Path "HKCU:\Control Panel\Accessibility\ToggleKeys" -Name "Flags" -Type String -Value "58"
+            Set-ItemProperty -Path "HKCU:\Control Panel\Accessibility\Keyboard Response" -Name "Flags" -Type String -Value "122"
+            '''
+        }
+        Theme: {
+            "Use windows dark theme": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "WindowsColorScheme -Dark", "AppMode -Dark"
+                default: true
+            }
+            "Download Secure UXTheme": {
+                run_in_file: true
+                flag: themepatcher
+                default: false
+                children: {
+                    "Install After Dark CC v2 theme": {
+                        run_in_file: true
+                        flag: afterdarktheme
+                        default: false
+                    }
+                }
+            }
+            "Enable window title bar color": {
+                command: Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "ColorPrevalence" -Type DWord -Value 1
+                default: false
+            }
+        }
+        "Taskbar & Start": {
+            "Center taskbar icons (TaskbarX)": {
+                command:
+                '''
+                choco install taskbarx -y --no-progress --no-color -r
+                Start-Process "C:\ProgramData\chocolatey\lib\taskbarx\tools\TaskbarX.exe" '-lr=100'
+                '''
+                default: false
+            }
+            "Show all tray icons": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "TrayIcons -Show"
+                default: false
+            }
+            "Show seconds in taskbar": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "SecondsInSystemClock -Show"
+                default: true
+            }
+            "Hide search bar in taskbar": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "TaskbarSearch -Hide"
+                default: true
+            }
+            'Disable "recently added programs" in start': {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "RecentlyAddedApps -Hide"
+                default: false
+            }
+            'Unpin all start tiles': {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "PinToStart -UnpinAll"
+                default: true
+            }
+            "Disable Sleep start menu and keyboard button": {
+                command:
+                '''
+                If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings")) {New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" | Out-Null}
+                Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" -Name "ShowSleepOption" -Type DWord -Value 0
+                powercfg /SETACVALUEINDEX SCHEME_CURRENT SUB_BUTTONS SBUTTONACTION 0
+                powercfg /SETDCVALUEINDEX SCHEME_CURRENT SUB_BUTTONS SBUTTONACTION 0
+                '''
+                default: false
+            }
+        }
+        "File Explorer": {
+            "Show checkboxes": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "CheckBoxes -Enable"
+                default: true
+            }
+            "Show hidden items": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "HiddenItems -Enable"
+                default: true
+            }
+            "Show protected operating system files": {
+                command: Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSuperHidden" -Type DWord -Value 1
+                default: false
+            }
+            "Show file extensions": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "FileExtensions -Show"
+                default: true
+            }
+            "Expand file explorer ribbon": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "FileExplorerRibbon -Expanded"
+                default: true
+            }
+            'Open file explorer to "This PC"': {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "OpenFileExplorerTo -ThisPC"
+                default: false
+            }
+            'Disable "recent files" in quick access': {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "QuickAccessRecentFiles -Hide"
+                default: false
+            }
+            "Disable pinning of frequent folders in quick access": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "QuickAccessFrequentFolders -Hide"
+                default: false
+            }
+            "Restore previous folder windows at login": {
+                command: Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "PersistBrowsers" -Type DWord -Value 1
+                default: false
+            }
+            "Show full directory path in Explorer title bar": {
+                command:
+                '''
+                If (!(Test-Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState")) {New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState" -Force | Out-Null}
+                Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState" -Name "FullPath" -Type DWord -Value 1
+                '''
+                default: false
+            }
+            "Hide items": {
+                "Hide network discovery": {
+                    command: Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\NonEnum" -Name "{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}" -Type DWord -Value 1
+                }
+                "Hide 3D Objects folder": {
+                    command: ./scripts/Sophia/Sophia.ps1 -Functions "3DObjects -Hide"
+                    default: true
+                }
+                "Hide Videos folder": {
+                    command:
+                    '''
+                    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}" -Recurse -ErrorAction SilentlyContinue
+                    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{A0953C92-50DC-43bf-BE83-3742FED03C9C}" -Recurse -ErrorAction SilentlyContinue
+                    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{35286a68-3c57-41a1-bbb1-0eae73d76c95}\PropertyBag" -Name "ThisPCPolicy" -Type String -Value "Hide"
+                    Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{35286a68-3c57-41a1-bbb1-0eae73d76c95}\PropertyBag" -Name "ThisPCPolicy" -Type String -Value "Hide"
+                    '''
+                }
+                "Hide Pictures folder": {
+                    command:
+                    '''
+                    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{24ad3ad4-a569-4530-98e1-ab02f9417aa8}" -Recurse -ErrorAction SilentlyContinue
+                    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{3ADD1653-EB32-4cb0-BBD7-DFA0ABB5ACCA}" -Recurse -ErrorAction SilentlyContinue
+                    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{0ddd015d-b06c-45d5-8c4c-f59713854639}\PropertyBag" -Name "ThisPCPolicy" -Type String -Value "Hide"
+                    Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{0ddd015d-b06c-45d5-8c4c-f59713854639}\PropertyBag" -Name "ThisPCPolicy" -Type String -Value "Hide"
+                    '''
+                }
+                "Hide Music folder": {
+                    command:
+                    '''
+                    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}" -Recurse -ErrorAction SilentlyContinue
+                    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{1CF1260C-4DD0-4ebb-811F-33C572699FDE}" -Recurse -ErrorAction SilentlyContinue
+                    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{a0c69a99-21c8-4671-8703-7934162fcf1d}\PropertyBag" -Name "ThisPCPolicy" -Type String -Value "Hide"
+                    Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{a0c69a99-21c8-4671-8703-7934162fcf1d}\PropertyBag" -Name "ThisPCPolicy" -Type String -Value "Hide"
+                    '''
+                }
+                "Hide Downloads folder": {
+                    command:
+                    '''
+                    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{088e3905-0323-4b02-9826-5d99428e115f}" -Recurse -ErrorAction SilentlyContinue
+                    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{374DE290-123F-4565-9164-39C4925E467B}" -Recurse -ErrorAction SilentlyContinue
+                    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{7d83ee9b-2244-4e70-b1f5-5393042af1e4}\PropertyBag" -Name "ThisPCPolicy" -Type String -Value "Hide"
+                    Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{7d83ee9b-2244-4e70-b1f5-5393042af1e4}\PropertyBag" -Name "ThisPCPolicy" -Type String -Value "Hide"
+                    '''
+                }
+                "Hide Documents folder": {
+                    command:
+                    '''
+                    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{d3162b92-9365-467a-956b-92703aca08af}" -Recurse -ErrorAction SilentlyContinue
+                    Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{A8CDFF1C-4878-43be-B5FD-F8091C1C60D0}" -Recurse -ErrorAction SilentlyContinue
+                    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{f42ee2d3-909f-4907-8871-4c22fc0bf756}\PropertyBag" -Name "ThisPCPolicy" -Type String -Value "Hide"
+                    Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{f42ee2d3-909f-4907-8871-4c22fc0bf756}\PropertyBag" -Name "ThisPCPolicy" -Type String -Value "Hide"
+                    '''
+                }
+            }
+        }
+        Other: {
+            "Disable display and sleep mode timeouts": {
+                command:
+                '''
+                powercfg /X monitor-timeout-ac 0
+                powercfg /X monitor-timeout-dc 0
+                powercfg /X standby-timeout-ac 0
+                powercfg /X standby-timeout-dc 0
+                '''
+                default: false
+            }
+            "Disable shake to minimize": {
+                command: Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "DisallowShaking" -Type String -Value 1
+                default: true
+            }
+            "Dismiss smart screeen filter": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "DismissSmartScreenFilter"
+                default: false
+            }
+            "Disable Recycling bin": {
+                command:
+                '''
+                If (!(Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer")) {New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" | Out-Null}
+                Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoRecycleFiles" -Type DWord -Value 1
+                '''
+                default: false
+            }
+            "Disable shortcut icon arrows": {
+                command: Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons" -Name "29" -ErrorAction SilentlyContinue
+                default: true
+            }
+            "Enable verbose startup/shutdown status messages": {
+                command:
+                '''
+                If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "VerboseStatus" -Type DWord -Value 1} Else {Remove-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "VerboseStatus" -ErrorAction SilentlyContinue}
+                '''
+                default: true
+            }
+        }
+    }
+    "Install Programs": {
+        Browsers:
+        {
+            Firefox:
+            {
+                description: Browser by Mozilla
+                choco: firefox
+                img: Firefox.svg
+            }
+            LibreWolf:
+            {
+                description: Firefox-based privacy browser
+                choco: librewolf
+                img: librewolf.89.0.2.svg
+            }
+            Chrome:
+            {
+                description: Browser by Google
+                choco: googlechrome
+                img: Chrome.png
+            }
+            Brave:
+            {
+                description: Chrome-based privacy browser
+                choco: brave
+                img: brave.1.27.84-beta.png
+            }
+            "Tor Browser":
+            {
+                description: Onion browser
+                choco: tor-browser
+                img: tor-browser.10.0.18.png
+            }
+        }
+        Utilities:
+        {
+            PowerToys:
+            {
+                description: Windows system utilities
+                choco: powertoys
+                img: powertoys.0.41.3.png
+            }
+            "Winaero Tweaker":
+            {
+                description: Windows system tweaker
+                choco: winaero-tweaker
+                img: winaero-tweaker.0.19.1.0.png
+            }
+            "Open Shell":
+            {
+                description: Alternative to windows search
+                choco: open-shell
+                img: open-shell.4.4.160.png
+            }
+            Everything:
+            {
+                description: File search engine
+                choco: everything
+                img: Everything.1.4.11009.png
+            }
+            "Revo Uninstaller":
+            {
+                description: Better program uninstaller
+                choco: revo-uninstaller
+                img: revo-uninstaller.2.2.5.0.png
+            }
+            AdwCleaner:
+            {
+                description: Remove PUPs and adware
+                choco: adwcleaner
+                img: adwcleaner.8.2.png
+            }
+            "Process Explorer":
+            {
+                description: Better taskmgr
+                choco: procexp
+                img: procexp.16.42.png
+            }
+            "Process Monitor":
+            {
+                description: Realtime file system, registry, and thread activity
+                choco: procmon
+                img: procmon.3.83.png
+            }
+            Autoruns:
+            {
+                description: View all startup tasks
+                choco: autoruns
+                img: AutoRuns.13.100.png
+            }
+            Qalculate:
+            {
+                description: Better calculator
+                choco: qalculate
+                img: qalculate.3.19.1.png
+            }
+            OpenHashTab:
+            {
+                description: File hash viewer
+                choco: openhashtab
+                img: openhashtab.3.0.1.png
+            }
+            Sandboxie-Plus:
+            {
+                description: Isolate programs
+                choco: null
+                run_in_file: true
+                flag: sandboxie-plus
+                img: sandboxie.png
+            }
+            dpScreenOCR:
+            {
+                description: Screen OCR utility
+                choco: null
+                download: https://github.com/danpla/dpscreenocr/releases/download/v1.0.2/dpScreenOCR-1.0.2-win32.exe
+                args: /S
+                img: dpscreenocr.png
+            }
+            TeraCopy:
+            {
+                description: Faster file copying
+                choco: teracopy
+                img: teracopy.png
+            }
+        }
+        Office:
+        {
+            LibreOffice:
+            {
+                description: Alternative to microsoft office
+                choco: libreoffice-still
+                img: libreoffice-still.7.0.6.svg
+            }
+            Thunderbird:
+            {
+                description: Email client
+                choco: thunderbird
+                img: thunderbird.78.11.0.png
+            }
+        }
+        Communication:
+        {
+            "Microsoft Teams":
+            {
+                description: Video conferencing
+                choco: microsoft-teams.install
+                img: microsoft-teams.install.1.4.00.11161.png
+            }
+            Discord:
+            {
+                description: Chat/voice calling
+                choco: discord
+                children:
+                {
+                    BetterDiscord:
+                    {
+                        description: Discord enhancer
+                        choco: null
+                        run_in_file: true
+                        flag: betterdiscord
+                        img: BetterDiscord.png
+                    }
+                }
+                img: discord.1.0.9002.svg
+            }
+            Teamspeak:
+            {
+                description: Voice calling
+                choco: teamspeak
+                img: teamspeak.3.5.6.png
+            }
+            Zoom:
+            {
+                description: Video conferencing
+                choco: zoom
+                img: zoom.5.7.1.543.png
+            }
+            Skype:
+            {
+                description: Chat/voice calling
+                choco: skype
+                img: skype.8.73.0.124.png
+            }
+        }
+        Media:
+        {
+            VLC:
+            {
+                description: Media player
+                choco: vlc
+                img: vlc.3.0.16.png
+            }
+            Mpv:
+            {
+                description: Media player
+                choco: mpv.install
+                img: mpv.install.2020.12.06.png
+            }
+            Audacity:
+            {
+                description: Audio recorder/editor
+                choco: audacity
+                img: audacity.3.0.2.svg
+            }
+            HandBrake:
+            {
+                description: Video utility
+                choco: handbrake.install
+                img: handbrake.install.1.3.3.png
+            }
+            "FFmpeg Batch AV Converter":
+            {
+                description: Front end for ffmpeg & youtube-dl
+                choco: ffmpeg-batch.install
+                img: ffmpeg-batch.install.2.4.0.png
+            }
+            AIMP:
+            {
+                description: Music player
+                choco: aimp
+                img: aimp.4.70.2251.png
+            }
+            "OBS Studio":
+            {
+                description: Screen recorder
+                choco: obs-studio.install
+                img: obs-studio.install.27.0.1.png
+            }
+            ShareX:
+            {
+                description: Screenshot utility
+                choco: sharex
+                img: sharex.13.5.0.png
+            }
+            Paint.NET:
+            {
+                description: Image editor
+                choco: paint.net
+                img: paint.net.4.2.16.png
+            }
+        }
+        Gaming:
+        {
+            Steam:
+            {
+                description: Software/game store
+                choco: steam-client
+                img: steam-client.2.10.91.91.png
+            }
+            Origin:
+            {
+                description: Game launcher
+                choco: origin
+                img: origin.10.5.100.48178.png
+            }
+            "Epic Games":
+            {
+                description: Software/game store
+                choco: epicgameslauncher
+                img: epicgameslauncher.1.1.298.0.png
+            }
+            "Ubisoft Connect":
+            {
+                description: Game launcher
+                choco: ubisoft-connect
+                img: ubisoft-connect.123.0.0.10520.png
+            }
+            Minecraft:
+            {
+                description: Minecraft launcher
+                choco: minecraft-launcher
+                children:
+                {
+                    "Fabulously Optimized (Modpack)":
+                    {
+                        description: Optimized fabric-based 1.16.5 modpack
+                        choco: null
+                        run_in_file: true
+                        flag: faboptimized
+                        img: faboptimized.png
+                    }
+                    "Lunar Client":
+                    {
+                        description: Optimized client for 1.8.9 PVP
+                        choco: null
+                        run_in_file: true
+                        flag: lunarclient
+                        img: lunarclient.png
+                    }
+                    MultiMC:
+                    {
+                        description: Minecraft instance manager
+                        choco: multimc
+                        img: multimc.0.6.12.png
+                    }
+                }
+                img: minecraft-launcher.1.0.0.020210507.png
+            }
+        }
+        Compression:
+        {
+            WinRAR:
+            {
+                description: Archive manager
+                choco: winrar
+                img: winrar.6.02.png
+            }
+            7-Zip:
+            {
+                description: Archive manager
+                choco: 7zip.install
+                img: 7zip.install.21.2-alpha.svg
+            }
+            PeaZip:
+            {
+                description: Better ui for 7zip
+                choco: peazip.install
+                img: peazip.install.8.0.0.svg
+            }
+        }
+        "Text Editor":
+        {
+            Notepad++:
+            {
+                description: Better notepad
+                choco: notepadplusplus.install
+                img: notepadplusplus.install.8.1.png
+            }
+            "Sublime Text 4":
+            {
+                description: Alternative to notepad++
+                choco: sublimetext4 --version 4.0.0.410700
+                img: sublimetext4.4.0.0.410700.png
+            }
+        }
+        IDE:
+        {
+            "Visual Studio Code":
+            {
+                description: Text editor/IDE
+                choco: vscode
+                children:
+                {
+                    "Live Share":
+                    {
+                        description: Real-time collaboration
+                        choco: vscode-vsliveshare
+                        img: vscode-vsliveshare.1.0.4498.png
+                    }
+                    IntelliCode:
+                    {
+                        description: AI-assisted development
+                        choco: vscode-intellicode
+                        img: vscode-intellicode.1.2.14.png
+                    }
+                    "Code Runner":
+                    {
+                        description: Run code for multiple languages
+                        choco: vscode-code-runner
+                        img: vscode-code-runner.0.11.4.png
+                    }
+                    Prettier:
+                    {
+                        description: Code formatter
+                        choco: vscode-prettier
+                        img: vscode-prettier.8.0.1.png
+                    }
+                    "Material Icon Theme":
+                    {
+                        description: Material theme for icons
+                        choco: materialicon-vscode
+                        img: materialicon-vscode.4.7.0.png
+                    }
+                    Python:
+                    {
+                        description: Python language support
+                        choco: vscode-python
+                        img: vscode-python.2021.6.944021595.png
+                    }
+                    "C#":
+                    {
+                        description: C# language support
+                        choco: vscode-csharp
+                        img: vscode-csharp.1.23.12.png
+                    }
+                    "C++ tools":
+                    {
+                        description: C/C++ language support
+                        choco: vscode-cpptools
+                        img: vscode-cpptools.0.24.1.png
+                    }
+                    Java:
+                    {
+                        description: Java language support
+                        choco: vscode-java
+                        img: vscode-java.0.79.2.png
+                    }
+                    AutoHotkey:
+                    {
+                        description: Autohotkey language support
+                        choco: vscode-autohotkey
+                        img: vscode-autohotkey.0.2.2.png
+                    }
+                    Pylance:
+                    {
+                        description: Better python syntax highlighting
+                        choco: vscode-pylance
+                        img: vscode-pylance.2021.6.3.png
+                    }
+                    Jupyter:
+                    {
+                        description: Jupyter notebook support
+                        choco: vscode-jupyter
+                        img: vscode-jupyter.2021.7.978384885.png
+                    }
+                }
+                img: vscode.1.57.1.png
+            }
+            "Visual Studio Codium":
+            {
+                description: Open source alternative to VS Code
+                choco: vscodium.install
+                img: vscodium.install.1.57.1.png
+            }
+            "Visual Studio 2019":
+            {
+                description: General IDE
+                choco: visualstudio2019community
+                img: visualstudio2019community.16.10.2.0.png
+            }
+            Atom:
+            {
+                description: Text editor/IDE
+                choco: atom.install
+                img: atom.install.1.58.0-beta0.png
+            }
+            "IntelliJ IDEA":
+            {
+                description: Java IDE
+                choco: intellijidea-community
+                img: intellijidea-community.2021.1.2.svg
+            }
+            Eclipse:
+            {
+                description: Java IDE
+                choco: eclipse
+                img: eclipse.4.20.png
+            }
+            PyCharm:
+            {
+                description: Python IDE
+                choco: pycharm-community
+                img: PyCharm-community.2021.1.2.png
+            }
+            Neovim:
+            {
+                description: Vim client
+                choco: neovim
+                children:
+                {
+                    VimPlug:
+                    {
+                        description: Vim plugin manager
+                        choco: null
+                        command: iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |` ni "$(@($env:XDG_DATA_HOME, $env:LOCALAPPDATA)[$null -eq $env:XDG_DATA_HOME])/nvim-data/site/autoload/plug.vim" -Force
+                    }
+                }
+                img: neovim.0.5.0-beta.png
+            }
+        }
+        Developer:
+        {
+            "Windows Terminal":
+            {
+                description: Terminal by Microsoft
+                choco: microsoft-windows-terminal
+                img: microsoft-windows-terminal.1.9.1445.0-beta.png
+            }
+            Cmder:
+            {
+                description: Better cmd
+                choco: cmder
+                img: Cmder.1.3.18.png
+            }
+            Git:
+            {
+                description: Git client for windows
+                choco: git
+                img: git.2.32.0.svg
+            }
+            "GitHub Desktop":
+            {
+                description: GitHub client
+                choco: github-desktop
+                img: github-desktop.2.9.0.png
+            }
+            WinSCP:
+            {
+                description: FTP/SCP client
+                choco: winscp.install
+                img: winscp.install.5.19.png
+            }
+            FileZilla:
+            {
+                description: FTP client
+                choco: filezilla
+                img: filezilla.3.54.1.svg
+            }
+            PuTTY:
+            {
+                description: SSH client
+                choco: putty.install
+                img: putty.install.0.75.png
+            }
+            Fiddler:
+            {
+                description: Web debugger
+                choco: fiddler
+                img: fiddler.5.0.20204.45441.png
+            }
+            FFmpeg:
+            {
+                description: Multimedia framework
+                choco: ffmpeg-full
+                img: ffmpeg-full.4.4.svg
+            }
+            Youtube-DL:
+            {
+                description: Command-line youtube downloader
+                choco: youtube-dl
+                img: youtube-dl.2021.06.06.svg
+            }
+            HxD:
+            {
+                description: Hex editor
+                choco: hxd
+                img: HxD.2.4.0.0.png
+            }
+            Ghidra:
+            {
+                description: Reverse engineering toolkit
+                choco: ghidra
+                img: ghidra.10.0.png
+            }
+            "JDK 11":
+            {
+                description: Java development kit 11.0.2.9
+                choco: jdk11
+                img: jdk11.11.0.2.9.svg
+            }
+            "Qt Designer":
+            {
+                description: UI designer
+                choco: null
+                download: https://build-system.fman.io/static/public/files/Qt%20Designer%20Setup.exe
+                args: /S
+                img: qt-designer.svg
+            }
+        }
+        Benchmark:
+        {
+            CineBench:
+            {
+                description: CPU & GPU benchmark
+                choco: cinebench
+                img: cinebench.23.200.png
+            }
+            UserBenchmark:
+            {
+                description: General hardware benchmark
+                choco: null
+                run_in_file: true
+                flag: userbenchmark
+                img: userbenchmark.png
+            }
+            CPU-Z:
+            {
+                description: CPU info/monitor
+                choco: cpu-z.install
+                img: cpu-z.install.1.96.0.20210529.png
+            }
+            GPU-Z:
+            {
+                description: GPU info/monitor
+                choco: gpu-z
+                img: gpu-z.2.40.0.png
+            }
+            OpenHardwareMonitor:
+            {
+                description: General hardware monitor
+                choco: openhardwaremonitor
+                img: OpenHardwareMonitor.0.9.6.20210201.png
+            }
+            "MSI Afterburner":
+            {
+                description: Ultimate graphics card utility
+                choco: msiafterburner
+                img: msiafterburner.4.6.3.png
+            }
+        }
+        "Languages & Runtimes":
+        {
+            "Java Runtime":
+            {
+                description: Latest Java runtime
+                choco: javaruntime
+                img: javaruntime.8.0.231.svg
+            }
+            AutoHotkey:
+            {
+                description: Hotkey scripting language
+                choco: autohotkey.install
+                img: autohotkey.install.1.1.33.09.png
+            }
+            "Spicetools Guest":
+            {
+                description: Driver for QEMU VMS
+                download: https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe
+                args: /S
+                img: spicetools.png
+            }
+            "Microsoft Visual C++ Redist":
+            {
+                "Visual C++ Redist 2015-2019":
+                {
+                    description: Common C++ framework (14.10)
+                    choco: vcredist140
+                    img: vcredist.png
+                }
+                "Visual C++ Redist 2017":
+                {
+                    description: C++ framework (14.10)
+                    choco: vcredist2017
+                    img: vcredist.png
+                }
+                "Visual C++ Redist 2015":
+                {
+                    description: C++ framework (14.0)
+                    choco: vcredist2015
+                    img: vcredist.png
+                }
+                "Visual C++ Redist 2013":
+                {
+                    description: C++ framework (12.0)
+                    choco: vcredist2013
+                    img: vcredist.png
+                }
+                "Visual C++ Redist 2012":
+                {
+                    description: C++ framework (11.0)
+                    choco: vcredist2012
+                    img: vcredist.png
+                }
+                "Visual C++ Redist 2010":
+                {
+                    description: C++ framework (10.0)
+                    choco: vcredist2010
+                    img: vcredist.png
+                }
+                "Visual C++ Redist 2008 SP1":
+                {
+                    description: C++ framework (9.0)
+                    choco: vcredist2008
+                    img: vcredist.png
+                }
+                "Visual C++ Redist 2005":
+                {
+                    description: C++ framework (8.0)
+                    choco: vcredist2005
+                    img: vcredist.png
+                }
+            }
+            .NET:
+            {
+                ".NET Framework 4.x (Latest)":
+                {
+                    description: Latest .NET 4.x Framework
+                    choco: dotnetfx
+                    img: dotnet.png
+                }
+                ".NET Framework 4.7.2":
+                {
+                    description: .NET Framework 4.7.2.20180712
+                    choco: dotnet4.7.2
+                    img: dotnet.png
+                }
+                ".NET Core 3.1":
+                {
+                    description: .NET Core 3.1 Desktop Runtime 3.1.16
+                    choco: dotnetcore-3.1-desktopruntime
+                    img: dotnetcore-3.1-desktopruntime.3.1.16.png
+                }
+            }
+            Python:
+            {
+                "Latest version":
+                {
+                    description: Latest version of Python
+                    choco: python
+                    img: python.svg
+                }
+                "Python 3.9.4":
+                {
+                    description: Python 3.9 Apr 4, 2021
+                    choco: python --version 3.9.4
+                    img: python.svg
+                }
+                "Python 3.8.10":
+                {
+                    description: Python 3.8 May 3, 2021
+                    choco: python --version 3.8.10
+                    img: python.svg
+                }
+                "Python 3.7.9":
+                {
+                    description: Python 3.7 Aug 17, 2020
+                    choco: python --version 3.7.10
+                    img: python.svg
+                }
+                "Python 3.6.8":
+                {
+                    description: Python 3.6 Dec 24, 2018
+                    choco: python --version 3.6.8
+                    img: python.svg
+                }
+                "Python 2.7.11":
+                {
+                    description: Python 2
+                    choco: python --version 2.7.11
+                    img: python.svg
+                }
+                "Pip packages":
+                {
+                    Colorama:
+                    {
+                        description: Common color library
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Requests:
+                    {
+                        description: HTTP requests
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    BeautifulSoup4:
+                    {
+                        description: Web scraping
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Numpy:
+                    {
+                        description: Scientific computation
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Pandas:
+                    {
+                        description: Data analysis
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Matplotlib:
+                    {
+                        description: 2D graph plotting
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Django:
+                    {
+                        description: Web framework
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Flask:
+                    {
+                        description: Web framework
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    PyQt5:
+                    {
+                        description: Qt support for python
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    pyqt5-tools:
+                    {
+                        description: Tools for PyQt5
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Pygame:
+                    {
+                        description: Game development
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Pillow:
+                    {
+                        description: Image manipulation
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Pywin32:
+                    {
+                        description: Winapi wrapper
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Pywinauto:
+                    {
+                        description: Windows library
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    PyAutoGUI:
+                    {
+                        description: GUI automation
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Pynput:
+                    {
+                        description: Simulate keyboard/mouse inputs
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Pyperclip:
+                    {
+                        description: Clipboard manager
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Requests-HTML:
+                    {
+                        description: HTTP HTML requests
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Grequests:
+                    {
+                        description: Asynchronous requests
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    PyCryptodome:
+                    {
+                        description: Cryptography library
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    Youtube-DL:
+                    {
+                        description: Youtube downloader
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    PyInstaller:
+                    {
+                        description: Python compiler
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                    cx-Freeze:
+                    {
+                        description: Python compiler
+                        choco: null
+                        pip: true
+                        img: python.svg
+                    }
+                }
+            }
+        }
+        "Windows Features":
+        {
+            "Windows Sandbox":
+            {
+                description: Simple virtual machine
+                choco: null
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "WindowsSandbox -Enable"
+                img: windows-sandbox.png
+            }
+            Hyper-V:
+            {
+                description: Virtual machine platform
+                choco: null
+                command: Enable-WindowsOptionalFeature –Online –FeatureName Microsoft-Hyper-V –All
+                img: microsoft-hyper-v-server-2008-r2_96249.png
+            }
+            WSL:
+            {
+                description: Linux on windows
+                choco: null
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "WSL -Enable"
+                img: wsl.png
+            }
+        }
+    }
+    # o&o shutup10 config file
+    ooconfig: {
+        P001: true
+        P002: true
+        P003: true
+        P004: true
+        P005: true
+        P006: true
+        P008: true
+        P017: true
+        P026: true
+        P027: true
+        P028: true
+        P064: true
+        P065: true
+        P066: true
+        P067: true
+        P070: true
+        P069: true
+        P009: true
+        P010: false
+        P015: true
+        P068: true
+        P016: true
+        A001: true
+        A002: true
+        A003: true
+        A004: false
+        A006: false
+        A005: true
+        P007: true
+        P036: true
+        P025: true
+        P033: true
+        P023: true
+        P056: false
+        P057: false
+        P012: false
+        P034: false
+        P013: false
+        P035: false
+        P062: false
+        P063: false
+        P047: false
+        P019: false
+        P048: false
+        P049: false
+        P020: false
+        P037: false
+        P011: false
+        P038: false
+        P050: false
+        P051: false
+        P018: false
+        P039: false
+        P021: false
+        P040: false
+        P022: false
+        P041: false
+        P014: false
+        P042: false
+        P052: false
+        P053: false
+        P054: false
+        P055: false
+        P029: false
+        P043: false
+        P030: false
+        P044: false
+        P031: false
+        P045: false
+        P032: false
+        P046: false
+        P058: false
+        P059: false
+        P060: false
+        P061: false
+        P024: false
+        S001: false
+        S002: true
+        S003: true
+        S008: false
+        E101: true
+        E115: true
+        E116: true
+        E117: true
+        E118: true
+        E107: false
+        E111: true
+        E112: true
+        E109: false
+        E121: false
+        E103: false
+        E119: false
+        E120: false
+        E122: false
+        E106: false
+        E001: true
+        E002: true
+        E003: true
+        E008: true
+        E007: true
+        E010: true
+        E011: true
+        E012: true
+        E009: false
+        E004: false
+        E005: false
+        E013: true
+        E014: false
+        E006: false
+        Y001: false
+        Y002: false
+        Y003: false
+        Y004: true
+        Y005: false
+        Y006: false
+        Y007: false
+        C012: true
+        C002: true
+        C013: true
+        C007: true
+        C008: true
+        C009: true
+        C010: true
+        C011: true
+        L001: false
+        L003: false
+        L004: false
+        L005: false
+        U001: true
+        U004: true
+        U005: true
+        W001: true
+        W011: true
+        W004: false
+        W005: false
+        W010: false
+        W009: false
+        W006: false
+        W008: false
+        M006: true
+        M011: false
+        M010: true
+        O003: true
+        O001: false
+        S012: true
+        S013: false
+        S014: false
+        K001: true
+        K002: true
+        K005: false
+        M001: true
+        M004: true
+        M005: true
+        M003: true
+        M012: true
+        M013: true
+        M014: true
+        M015: true
+        M016: true
+        M017: true
+        M018: true
+        M019: false
+        M020: false
+        N001: false
+    }
+}
