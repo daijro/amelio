@@ -853,7 +853,7 @@
             }
             "Process Monitor":
             {
-                description: Realtime file system, registry, and thread activity
+                description: Real-time file system, registry, and thread activity
                 choco: procmon
                 img: procmon.3.83.png
             }
