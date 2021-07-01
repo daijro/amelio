@@ -395,6 +395,9 @@
             <italic>true</italic>
            </font>
           </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
           <item>
            <property name="text">
             <string>Preparing...</string>
