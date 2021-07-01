@@ -246,7 +246,10 @@ class UI(QMainWindow):
                 self.log('Installing choco')
                 self.px.run(self.data['InstallChoco'], timeout=9999)
 
-            ooconfig = self.data['ooconfig']
+            if self.optimize_essential.isChecked():
+                ooconfig = self.data['ooconfig']
+            else:
+                ooconfig = {}
             
             # list of commands
             commands = []
@@ -288,7 +291,7 @@ class UI(QMainWindow):
                             otherfuncslist.append(item['value']['flag'])
 
             # o&o shutup10 config
-            if self.optimize_essential.isChecked() and run_all_sections:
+            if len(ooconfig) != 0 and run_all_sections:
                 commands.insert(0, {'Runing O&O Shutup10 config': [self.run_shutup10(ooconfig)]})
 
             # adding package commands

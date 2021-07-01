@@ -506,6 +506,11 @@
                 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "PublishUserActivities" -Type DWord -Value 0
                 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "UploadUserActivities" -Type DWord -Value 0
                 '''
+                ooconfig: {
+                    A001: true
+                    A002: true
+                    A003: true
+                }
                 default: true
                 recommend: yes
             }
@@ -770,6 +775,18 @@
                 If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "VerboseStatus" -Type DWord -Value 1} Else {Remove-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "VerboseStatus" -ErrorAction SilentlyContinue}
                 '''
                 default: true
+            }
+            "Disable app notifications": {
+                ooconfig: {
+                    P010: true
+                }
+                default: false
+            }
+            "Disable biometical meatures": {
+                ooconfig: {
+                    P009: true
+                }
+                default: false
             }
         }
     }
@@ -1714,7 +1731,7 @@
         P067: true
         P070: true
         P069: true
-        P009: true
+        P009: false
         P010: false
         P015: true
         P068: true
