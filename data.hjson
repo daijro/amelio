@@ -450,6 +450,11 @@
             }
         }
         Other: {
+            "Block tracking domains (DNS hosts list)": {
+                command: ./scripts/BlockTelemetry.ps1
+                default: true
+                recommend: yes
+            }
             "Disable Bing search": {
                 command: ./scripts/Sophia/Sophia.ps1 -Functions "BingSearch -Disable"
                 default: true
