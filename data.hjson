@@ -449,7 +449,7 @@
                 recommend: slower systems
             }
         }
-        Other: {
+        Tracking: {
             "Block tracking domains (DNS hosts list)": {
                 command: ./scripts/BlockTelemetry.ps1
                 default: true
@@ -457,11 +457,6 @@
             }
             "Disable Bing search": {
                 command: ./scripts/Sophia/Sophia.ps1 -Functions "BingSearch -Disable"
-                default: true
-                recommend: yes
-            }
-            "Automatically clear %tmp% folder": {
-                command: ./scripts/Sophia/Sophia.ps1 -Functions "TempTask -Register"
                 default: true
                 recommend: yes
             }
@@ -499,11 +494,6 @@
                 default: true
                 recommend: yes
             }
-            "Disable action center": {
-                command: Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Type DWord -Value 1
-                default: false
-                recommend: slower systems
-            }
             "Disable activity history": {
                 command:
                 '''
@@ -526,13 +516,25 @@
                 default: false
                 recommend: limited
             }
-            "Disable blur on lock screen": {
-                command: Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "DisableAcrylicBackgroundOnLogon" -Type DWord -Value 1
+            "Disable Xbox game bar & game tips": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "XboxGameBar -Disable", "XboxGameTips -Disable"
                 default: true
                 recommend: yes
             }
-            "Disable Xbox game bar & game tips": {
-                command: ./scripts/Sophia/Sophia.ps1 -Functions "XboxGameBar -Disable", "XboxGameTips -Disable"
+        }
+        Other: {
+            "Automatically clear %tmp% folder": {
+                command: ./scripts/Sophia/Sophia.ps1 -Functions "TempTask -Register"
+                default: true
+                recommend: yes
+            }
+            "Disable action center": {
+                command: Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Type DWord -Value 1
+                default: false
+                recommend: slower systems
+            }
+            "Disable blur on lock screen": {
+                command: Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "DisableAcrylicBackgroundOnLogon" -Type DWord -Value 1
                 default: true
                 recommend: yes
             }
