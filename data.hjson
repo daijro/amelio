@@ -1745,84 +1745,84 @@
         P067: true
         P070: true
         P069: true
-        P009: false
-        P010: false
+        // P009: false
+        // P010: false
         P015: true
         P068: true
         P016: true
         A001: true
         A002: true
         A003: true
-        A004: false
-        A006: false
+        // A004: false
+        // A006: false
         A005: true
         P007: true
         P036: true
         P025: true
         P033: true
         P023: true
-        P056: false
-        P057: false
-        P012: false
-        P034: false
-        P013: false
-        P035: false
-        P062: false
-        P063: false
-        P047: false
-        P019: false
-        P048: false
-        P049: false
-        P020: false
-        P037: false
-        P011: false
-        P038: false
-        P050: false
-        P051: false
-        P018: false
-        P039: false
-        P021: false
-        P040: false
-        P022: false
-        P041: false
-        P014: false
-        P042: false
-        P052: false
-        P053: false
-        P054: false
-        P055: false
-        P029: false
-        P043: false
-        P030: false
-        P044: false
-        P031: false
-        P045: false
-        P032: false
-        P046: false
-        P058: false
-        P059: false
-        P060: false
-        P061: false
-        P024: false
-        S001: false
+        // P056: false
+        // P057: false
+        // P012: false
+        // P034: false
+        // P013: false
+        // P035: false
+        // P062: false
+        // P063: false
+        // P047: false
+        // P019: false
+        // P048: false
+        // P049: false
+        // P020: false
+        // P037: false
+        // P011: false
+        // P038: false
+        // P050: false
+        // P051: false
+        // P018: false
+        // P039: false
+        // P021: false
+        // P040: false
+        // P022: false
+        // P041: false
+        // P014: false
+        // P042: false
+        // P052: false
+        // P053: false
+        // P054: false
+        // P055: false
+        // P029: false
+        // P043: false
+        // P030: false
+        // P044: false
+        // P031: false
+        // P045: false
+        // P032: false
+        // P046: false
+        // P058: false
+        // P059: false
+        // P060: false
+        // P061: false
+        // P024: false
+        // S001: false
         S002: true
         S003: true
-        S008: false
+        // S008: false
         E101: true
         E115: true
         E116: true
         E117: true
         E118: true
-        E107: false
+        // E107: false
         E111: true
         E112: true
-        E109: false
-        E121: false
-        E103: false
-        E119: false
-        E120: false
-        E122: false
-        E106: false
+        // E109: false
+        // E121: false
+        // E103: false
+        // E119: false
+        // E120: false
+        // E122: false
+        // E106: false
         E001: true
         E002: true
         E003: true
@@ -1831,19 +1831,19 @@
         E010: true
         E011: true
         E012: true
-        E009: false
-        E004: false
-        E005: false
+        // E009: false
+        // E004: false
+        // E005: false
         E013: true
-        E014: false
-        E006: false
-        Y001: false
-        Y002: false
-        Y003: false
+        // E014: false
+        // E006: false
+        // Y001: false
+        // Y002: false
+        // Y003: false
         Y004: true
-        Y005: false
-        Y006: false
-        Y007: false
+        // Y005: false
+        // Y006: false
+        // Y007: false
         C012: true
         C002: true
         C013: true
@@ -1852,32 +1852,32 @@
         C009: true
         C010: true
         C011: true
-        L001: false
-        L003: false
-        L004: false
-        L005: false
+        // L001: false
+        // L003: false
+        // L004: false
+        // L005: false
         U001: true
         U004: true
         U005: true
         W001: true
         W011: true
-        W004: false
-        W005: false
-        W010: false
-        W009: false
-        W006: false
-        W008: false
+        // W004: false
+        // W005: false
+        // W010: false
+        // W009: false
+        // W006: false
+        // W008: false
         M006: true
-        M011: false
+        // M011: false
         M010: true
         O003: true
-        O001: false
+        // O001: false
         S012: true
-        S013: false
-        S014: false
+        // S013: false
+        // S014: false
         K001: true
         K002: true
-        K005: false
+        // K005: false
         M001: true
         M004: true
         M005: true
@@ -1889,8 +1889,8 @@
         M016: true
         M017: true
         M018: true
-        M019: false
-        M020: false
-        N001: false
+        // M019: false
+        // M020: false
+        // N001: false
     }
 }
