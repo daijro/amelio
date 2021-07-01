@@ -2,7 +2,7 @@
 
 **(WARNING: This project is still in development)**
 
-Amelio is a Windows setup utility that helps users strip the OS of telemetry and bloatware, install common programs, and make UI enhancements.
+Amelio is a Windows setup utility that helps users strip the OS of telemetry and bloatware, optimize performance, install common programs, and make UI enhancements.
 
 Running this tool is best done on a fresh install of Windows.
 
