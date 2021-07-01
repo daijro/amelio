@@ -266,7 +266,7 @@
           </widget>
           <widget class="QWidget" name="tab_4">
            <attribute name="title">
-            <string>Install Programs</string>
+            <string>Software</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_11">
             <item row="1" column="0">
@@ -333,7 +333,7 @@
         <item row="1" column="2">
          <widget class="QPushButton" name="pushButton_2">
           <property name="text">
-           <string>Install Programs</string>
+           <string>Install Software</string>
           </property>
          </widget>
         </item>
