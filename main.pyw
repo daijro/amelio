@@ -292,7 +292,7 @@ class UI(QMainWindow):
 
             # o&o shutup10 config
             if len(ooconfig) != 0 and run_all_sections:
-                commands.insert(0, {'Runing O&O Shutup10 config': [self.run_shutup10(ooconfig)]})
+                commands.insert(0, {'Running O&O Shutup10 config': [self.run_shutup10(ooconfig)]})
 
             # adding package commands
             if len(uwppackages) > 0: commands.insert(0, {'Removing bloatware UWP packages': ['./scripts/Windows10Debloater/DebloatWindows.ps1 "'+ '\" \"'.join(uwppackages)+ '\"']})
