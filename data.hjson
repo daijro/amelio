@@ -374,6 +374,11 @@
                 default: false
                 recommend: limited
             }
+            "Use DNS over HTTPS (1.1.1.1)": {
+                command: ./scripts/UseDnsOverHttps.ps1
+                default: true
+                recommend: yes
+            }
             "Disable Remote Desktop": {
                 command:
                 '''
