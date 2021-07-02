@@ -415,7 +415,7 @@
                 default: true
                 recommend: yes
             }
-            "Fix timer resolution": {
+            "Fix event timer resolution": {
                 command:
                 '''
                 bcdedit /set useplatformclock no
@@ -1378,6 +1378,11 @@
                 run_in_file: true
                 flag: userbenchmark
                 img: userbenchmark.png
+            }
+            CrystalDiskMark: {
+                description: Read/write benchmark
+                choco: crystaldiskmark
+                img: crystaldiskmark.8.0.2.png
             }
             CPU-Z:
             {

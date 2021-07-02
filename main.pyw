@@ -451,7 +451,7 @@ class UI(QMainWindow):
                 '/files/3202/525/slight-gui-modifications-1.7.1.jar',
                 '/files/3299/645/capes-1.1.2.jar',
                 '/files/3358/432/ferritecore-2.0.5-fabric.jar',
-                '/files/3355/671/sodium-extra-0.3.2.jar',
+                # '/files/3355/671/sodium-extra-0.3.2.jar',         causes issues
                 '/files/3248/104/smoothboot-fabric-1.16.5-1.6.0.jar',
                 '/files/3193/496/antighost-1.16.5-fabric0.30.0-1.1.3.jar',
                 '/files/3298/609/custom-fog-1.5.1.jar',
