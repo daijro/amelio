@@ -762,12 +762,16 @@
             }
         }
         "Context Menu": {
-            "Open cmd window here": {
+            "Open command prompt here": {
                 command: ./scripts/ContextMenu/OpenCmd.ps1
                 default: false
             }
             "Kill all not responding tasks": {
                 command: ./scripts/ContextMenu/KillNotResponding.ps1
+                default: false
+            }
+            "Restart explorer": {
+                command: ./scripts/ContextMenu/RestartExplorer.ps1
                 default: false
             }
             "Clear clipboard": {
@@ -784,6 +788,12 @@
                 command: Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "DisableAcrylicBackgroundOnLogon" -Type DWord -Value 1
                 default: true
             }
+            "Disable notifications on lock screen": {
+                ooconfig: {
+                    K005: true
+                }
+                default: true
+            }
             "Disable lock screen": {
                 command:
                 '''
@@ -791,12 +801,6 @@
                 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen" -Type DWord -Value 1
                 '''
                 default: false
-            }
-            "Disable notifications on lock screen": {
-                ooconfig: {
-                    K005: true
-                }
-                default: true
             }
             "Disable biometical features": {
                 ooconfig: {
