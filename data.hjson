@@ -444,6 +444,11 @@
                 default: true
                 recommend: yes
             }
+            "Clear pagefile.sys on shutdown": {
+                command: Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "ClearPageFileAtShutdown" -Type DWord -Value 0
+                default: true
+                recommend: yes
+            }
             "Disable search indexing": {
                 command: 
                 '''
@@ -534,14 +539,13 @@
                 recommend: yes
             }
             "Disable action center": {
-                command: Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Type DWord -Value 1
+                command:
+                '''
+                Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Type DWord -Value 1
+                Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Type DWord -Value 1
+                '''
                 default: false
                 recommend: slower systems
-            }
-            "Disable blur on lock screen": {
-                command: Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "DisableAcrylicBackgroundOnLogon" -Type DWord -Value 1
-                default: true
-                recommend: yes
             }
             "Disable fast startup": {
                 command: Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power" -Name "HiberbootEnabled" -Type DWord -Value 0
@@ -757,6 +761,50 @@
                 }
             }
         }
+        "Context Menu": {
+            "Open cmd window here": {
+                command: ./scripts/ContextMenu/OpenCmd.ps1
+                default: false
+            }
+            "Kill all not responding tasks": {
+                command: ./scripts/ContextMenu/KillNotResponding.ps1
+                default: false
+            }
+            "Clear clipboard": {
+                command: ./scripts/ContextMenu/ClearClipboard.ps1
+                default: false
+            }
+            "Take ownership": {
+                command: ./scripts/ContextMenu/TakeOwnership.ps1
+                default: false
+            }
+        }
+        "Lock Screen": {
+            "Disable blur on lock screen": {
+                command: Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "DisableAcrylicBackgroundOnLogon" -Type DWord -Value 1
+                default: true
+            }
+            "Disable lock screen": {
+                command:
+                '''
+                if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization") -ne $true) {  New-Item "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -force -ea SilentlyContinue }
+                Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen" -Type DWord -Value 1
+                '''
+                default: false
+            }
+            "Disable notifications on lock screen": {
+                ooconfig: {
+                    K005: true
+                }
+                default: true
+            }
+            "Disable biometical features": {
+                ooconfig: {
+                    P009: true
+                }
+                default: false
+            }
+        }
         Other: {
             "Disable display and sleep mode timeouts": {
                 command:
@@ -798,12 +846,6 @@
             "Disable app notifications": {
                 ooconfig: {
                     P010: true
-                }
-                default: false
-            }
-            "Disable biometical meatures": {
-                ooconfig: {
-                    P009: true
                 }
                 default: false
             }
