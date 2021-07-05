@@ -1020,6 +1020,11 @@
                 }
                 img: discord.1.0.9002.svg
             }
+            Telegram: {
+                description: Chat/voice calling
+                choco: telegram.install
+                img: telegram.png
+            }
             Teamspeak:
             {
                 description: Voice calling

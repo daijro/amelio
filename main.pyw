@@ -429,10 +429,13 @@ class UI(QMainWindow):
             a = requests.get('https://launcherupdates.lunarclientcdn.com/latest.yml').text
             url = 'https://launcherupdates.lunarclientcdn.com/' + quote(re.findall('url:.*\n', a)[0].replace('url: ', '').strip())
             print(self.px.run(self.download_installer(url, '/S'), timeout=9999))
+            return
 
         elif flag == "userbenchmark":
+            self.log('Downloading UserBenchmark to Desktop')
             web_download('https://www.userbenchmark.com/resources/download/UserBenchMark.exe', os.path.join(os.environ['userprofile'], 'Desktop', 'UserBenchMark.exe'))
-    
+            return
+
         elif flag == "faboptimized":
             mod_files = [
                 '/files/3358/614/fabric-api-0.36.0%2B1.16.jar',
@@ -479,7 +482,7 @@ class UI(QMainWindow):
                 if not os.path.exists(os.path.join(mc_folder, name)):
                     self.log('Downloading mc mod: '+name)
                     web_download('https://media.forgecdn.net'+mod, os.path.join(mc_folder, name))
-
+            return
 
 
 
