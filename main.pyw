@@ -282,7 +282,7 @@ class UI(QMainWindow):
                         elif item['value'].get('choco'):        # choco packages to install
                             chocopackages.update({item['name']: item['value']['choco'].split('\n')})
                         elif item['value'].get('pip'):          # pip packages to install
-                            pippackages += item['value']['pip'].split('\n')
+                            pippackages.append(item['name'].lower())
                         elif item['value'].get('ooconfig'):     # ooconfig
                             ooconfig.update(item['value']['ooconfig'])
                         elif item['value'].get('download'):     # download installer files
