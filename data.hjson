@@ -445,7 +445,7 @@
                 recommend: yes
             }
             "Clear pagefile.sys on shutdown": {
-                command: Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "ClearPageFileAtShutdown" -Type DWord -Value 0
+                command: Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "ClearPageFileAtShutdown" -Type DWord -Value 1
                 default: true
                 recommend: yes
             }
